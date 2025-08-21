@@ -7,7 +7,6 @@ import '@fontsource/inter'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-
         <CssVarsProvider
             defaultMode={'dark'}
             modeStorageKey="theme_mode">

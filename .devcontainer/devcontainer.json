@@ -1,0 +1,13 @@
+{
+  "name": "Node.js & TypeScript",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "customizations": {
+    "jetbrains": {
+      "backend": "WebStorm",
+      "settings" : {
+        "Git4Idea:app:Git-Application-Settings.use_credential_helper": true,
+        "com.intellij:app:HttpConfigurable.use_proxy_pac": true
+      }
+    }
+  }
+}
