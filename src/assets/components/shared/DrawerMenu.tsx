@@ -2,6 +2,7 @@ import {Badge, Divider, Drawer, ListItem, Stack, Typography} from "@mui/joy";
 import {Link, useLocation} from "react-router-dom";
 import {Casino, Home, Password, People, QrCode, Shuffle} from "@mui/icons-material";
 import {useEffect} from "react";
+import {routeAsPath} from "@utils/routeNames.ts";
 
 interface DrawerMenuProps {
     open: boolean;
@@ -23,38 +24,43 @@ export function DrawerMenu(props: DrawerMenuProps) {
                     <Typography level={'title-lg'}>Utilidades gerais</Typography>
                 </ListItem>
                 <Divider/>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link} to={'/'}>
+                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
+                          to={routeAsPath('index')}>
                     <Typography level={'body-md'}>Inicio</Typography>
                     <Typography>
                         <Home/>
                     </Typography>
                 </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link} to={'/sorteador'}>
+                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
+                          to={routeAsPath('sorteioAleatorio')}>
                     <Typography level={'body-md'}>Sorteio aleatório</Typography>
                     <Typography>
                         <Shuffle/>
                     </Typography>
                 </ListItem>
                 <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={'/gerador-senhas'}>
+                          to={routeAsPath('geradorSenhas')}>
                     <Typography level={'body-md'}>Gerador de senhas</Typography>
                     <Typography>
                         <Password/>
                     </Typography>
                 </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link} to={'/qr-code'}>
+                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
+                          to={routeAsPath('geradorQrCode')}>
                     <Typography level={'body-md'}>Gerador de QrCode</Typography>
                     <Typography>
                         <QrCode/>
                     </Typography>
                 </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link} to={'/dados'}>
+                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
+                          to={routeAsPath('rolagemDados')}>
                     <Typography level={'body-md'}>Rolagem de dados</Typography>
                     <Typography>
                         <Casino/>
                     </Typography>
                 </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link} to={'/amigo-secreto'}>
+                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
+                          to={routeAsPath('amigoSecreto')}>
                     <Typography level={'body-md'}>Amigo secreto</Typography>
                     <Typography>
                         <Badge size={'sm'} color={'neutral'} badgeContent={'?'}>

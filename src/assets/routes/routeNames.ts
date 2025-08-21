@@ -1,6 +1,0 @@
-export const sorteioAleatorio = '/sorteio-aleatorio'
-export const geradorSenhas = '/gerador-senhas'
-export const geradorQrCode = '/gerador-qr-code'
-export const rolagemDados = '/rolagem-dados'
-export const amigoSecreto = '/amigo-secreto'
-export const amigoSecretoMeus = amigoSecreto + '/meus'
