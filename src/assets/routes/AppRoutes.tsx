@@ -1,6 +1,6 @@
 import {Route, Routes} from "react-router-dom";
-import {AppHeader} from "../shared/AppHeader.tsx";
-import {HomePage} from "../pages/HomePage.tsx";
+import {AppHeader} from "../components/shared/AppHeader.tsx";
+import {HomePage} from "../components/pages/HomePage.tsx";
 
 export function AppRoutes() {
     return (<Routes>
