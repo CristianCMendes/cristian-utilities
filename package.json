@@ -25,6 +25,7 @@
     "@types/react-dom": "^19.1.7",
     "@typescript/native-preview": "^7.0.0-dev.20250821.1",
     "@vitejs/plugin-react": "^5.0.1",
+    "dayjs": "^1.11.13",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
