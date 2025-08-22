@@ -3,8 +3,11 @@ import {createRoot} from 'react-dom/client'
 import {createTheme, CssBaseline, ThemeProvider} from '@mui/material'
 import {AppRoutes} from "@routes/AppRoutes.tsx";
 import {BrowserRouter} from "react-router-dom";
+import {registerPWA} from "./pwa-registrer.ts";
 
 import '@fontsource/inter'
+
+registerPWA()
 
 const theme = createTheme({
     palette: {
