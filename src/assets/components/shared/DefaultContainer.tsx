@@ -24,7 +24,7 @@ export function DefaultContainer({
                     </Typography>
                 </Grid>
             }
-            <Grid p={p} container>
+            <Grid p={p} container size={12}>
                 {children}
             </Grid>
         </Grid>
