@@ -1,8 +1,24 @@
 {
   "name": "utilidades",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "description": "Utilidades para projetos",
+  "author": {
+    "email": "dontetb288@gmail.com",
+    "name": "Cristian C Mendes / Korsa",
+    "url": "https://github.com/CristianCMendes"
+  },
+  "repository": {
+    "url": "https://github.com/CristianCMendes/cristian-utilities.git",
+    "type": "github"
+  },
+  "os": [
+    "linux",
+    "win32",
+    "win64"
+  ],
+  "readme": "README.md",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "vite",

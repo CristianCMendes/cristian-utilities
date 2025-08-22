@@ -1,4 +1,4 @@
-# Utilidades
+# Pacote de utilidades - Por Cristian/Korsa
 
 Aplicação web construída com React + TypeScript + Vite. Este repositório contém utilitários e componentes que podem ser usados livremente pela comunidade para estudos, forks e criações de versões próprias — desde que não haja finalidade comercial (venda).
 
@@ -30,6 +30,13 @@ Projeto inicializado com Vite e React, utilizando TypeScript e Material UI (MUI)
 - build: gera o build de produção (tsc + vite build)
 - preview: pré-visualiza o build de produção
 - lint: executa o ESLint
+
+### Notas sobre o build (Vite)
+- Divisão de código otimizada: manualChunks com separação dedicada para React, MUI, Emotion e React Router. Todo o restante de node_modules é agrupado em um único chunk vendor para evitar muitos arquivos pequenos.
+- Nomes de arquivos com hash e pastas organizadas em assets/chunks para JavaScript e assets/[ext] para demais assets.
+- Remoção de console/debugger apenas em produção para reduzir o tamanho do bundle sem prejudicar DX.
+- assetsInlineLimit = 0 para forçar assets a serem emitidos como arquivos (melhor cache CDN).
+- emptyOutDir = true para limpar a pasta dist a cada build.
 
 ## Estrutura do projeto
 - src/: código-fonte da aplicação (componentes, rotas, etc.)
