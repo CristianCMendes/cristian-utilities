@@ -13,27 +13,27 @@
     /* Paths */
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "./src/assets/*"
       ],
       "@routes/*": [
-        "src/assets/routes/*"
+        "./src/assets/routes/*"
       ],
       "@hooks/*": [
-        "src/assets/hooks/*"
+        "./src/assets/hooks/*"
       ],
       "@components/*": [
-        "src/assets/components/*"
+        "./src/assets/components/*"
       ],
       "@pages/*": [
-        "src/assets/components/pages/*"
+        "./src/assets/components/pages/*"
       ],
-      "@utils/*": ["src/assets/utils/*"]
+      "@utils/*": ["./src/assets/utils/*"]
     ,
       "@shared/*": [
-        "src/assets/components/shared/*"
+        "./src/assets/components/shared/*"
       ]
     },
     /* Bundler mode */

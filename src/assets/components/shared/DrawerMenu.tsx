@@ -1,8 +1,9 @@
-import {Badge, Divider, Drawer, ListItem, Stack, Typography} from "@mui/joy";
-import {Link, useLocation} from "react-router-dom";
-import {Casino, Home, Password, People, QrCode, Shuffle} from "@mui/icons-material";
-import {useEffect} from "react";
-import {routeAsPath} from "@utils/routeNames.ts";
+import {Link as RouteLink, useLocation} from "react-router-dom";
+import {Casino, Home, Password, People, QrCode2, Shuffle} from "@mui/icons-material";
+import * as React from "react";
+import {memo, useEffect} from "react";
+import {routeAsPath, type ROUTES_KEYS} from "@utils/routeNames.ts";
+import {Badge, Link, Divider, Drawer, ListItem, Stack, Typography} from "@mui/material";
 
 interface DrawerMenuProps {
     open: boolean;
@@ -17,61 +18,37 @@ export function DrawerMenu(props: DrawerMenuProps) {
         onClose();
     }, [location.pathname]);
 
-    return (<Drawer open={open} onClose={onClose} variant={'soft'}>
+    const Li = memo(({label, url, icon}:
+                     { label: string, url: ROUTES_KEYS, icon: React.ReactElement }) => {
+        return (<ListItem sx={{display: 'flex', justifyContent: 'space-between'}} dense>
+                <Link component={RouteLink} to={routeAsPath(url)} variant={'overline'}>{label}</Link>
+                <Typography>
+                    {icon}
+                </Typography>
+            </ListItem>
+        )
+    })
+
+
+    return (<Drawer open={open} onClose={onClose}>
         <Stack alignItems={'stretch'} justifyContent={'space-between'} flex={'content'}>
             <Stack sx={{p: 2}} gap={1}>
                 <ListItem>
-                    <Typography level={'title-lg'}>Utilidades gerais</Typography>
+                    <Typography variant={'subtitle1'}>Utilidades gerais</Typography>
                 </ListItem>
                 <Divider/>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('index')}>
-                    <Typography level={'body-md'}>Inicio</Typography>
-                    <Typography>
-                        <Home/>
-                    </Typography>
-                </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('sorteioAleatorio')}>
-                    <Typography level={'body-md'}>Sorteio aleatório</Typography>
-                    <Typography>
-                        <Shuffle/>
-                    </Typography>
-                </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('geradorSenhas')}>
-                    <Typography level={'body-md'}>Gerador de senhas</Typography>
-                    <Typography>
-                        <Password/>
-                    </Typography>
-                </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('geradorQrCode')}>
-                    <Typography level={'body-md'}>Gerador de QrCode</Typography>
-                    <Typography>
-                        <QrCode/>
-                    </Typography>
-                </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('rolagemDados')}>
-                    <Typography level={'body-md'}>Rolagem de dados</Typography>
-                    <Typography>
-                        <Casino/>
-                    </Typography>
-                </ListItem>
-                <ListItem sx={{display: 'flex', justifyContent: 'space-between'}} component={Link}
-                          to={routeAsPath('amigoSecreto')}>
-                    <Typography level={'body-md'}>Amigo secreto</Typography>
-                    <Typography>
-                        <Badge size={'sm'} color={'neutral'} badgeContent={'?'}>
-                            <People/>
-                        </Badge>
-                    </Typography>
-                </ListItem>
+                <Li url={"index"} icon={<Home/>} label={'Inicio'}/>
+                <Li label={'Sorteio aleatório'} url={'sorteioAleatorio'} icon={<Shuffle/>}/>
+                <Li label={'Gerador de senhas'} url={'geradorSenhas'} icon={<Password/>}/>
+                <Li label={'Gerador de QrCode'} url={'geradorQrCode'} icon={<QrCode2/>}/>
+                <Li label={'Rolagem de dados'} url={'rolagemDados'} icon={<Casino/>}/>
+                <Li label={'Amigo secreto'} url={'amigoSecreto'}
+                    icon={<Badge variant={'standard'} badgeContent={'?'}><People/></Badge>}/>
             </Stack>
             <Stack sx={{p: 2}} gap={1}>
                 <ListItem sx={{display: 'flex', justifyContent: 'center'}}>
-                    <Typography textAlign={'center'} level={'body-sm'}>Desenvolvido por Cristian C. Mendes</Typography>
+                    <Typography textAlign={'center'} variant={'caption'}>Desenvolvido por Cristian C.
+                        Mendes</Typography>
                 </ListItem>
             </Stack>
         </Stack>

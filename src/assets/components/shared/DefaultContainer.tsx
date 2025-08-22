@@ -1,28 +1,30 @@
-import {type GridProps, Sheet, Typography} from "@mui/joy";
-import Grid from "@mui/joy/Grid";
+import {Grid, Paper, Typography} from "@mui/material";
+import * as React from "react";
 
-interface DefaultContainerProps extends GridProps {
+interface DefaultContainerProps extends React.ComponentProps<typeof Grid> {
     title?: string,
     hideHeader?: boolean,
+    component?: React.ElementType
 }
 
 export function DefaultContainer({
                                      hideHeader = false, title,
-                                     component = Sheet,
                                      children,
                                      p = 1.5,
                                      my = p,
+                                     component = Paper,
                                      ...props
                                  }: DefaultContainerProps) {
-    return (<Grid container {...props} component={component}>
+    return (<Grid container {...props}
+                  component={component}>
             {!hideHeader &&
-                <Grid component={Sheet} xs={12} my={my}>
-                    <Typography level={'title-lg'} textAlign={'center'}>
+                <Grid size={12} my={my}>
+                    <Typography variant={'h4'} textAlign={'center'}>
                         {title}
                     </Typography>
                 </Grid>
             }
-            <Grid p={p}>
+            <Grid p={p} container>
                 {children}
             </Grid>
         </Grid>
