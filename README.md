@@ -1,69 +1,47 @@
-# React + TypeScript + Vite
+# Utilidades
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web construída com React + TypeScript + Vite. Este repositório contém utilitários e componentes que podem ser usados livremente pela comunidade para estudos, forks e criações de versões próprias — desde que não haja finalidade comercial (venda).
 
-Currently, two official plugins are available:
+## Sumário
+- Visão geral
+- Requisitos
+- Como executar
+- Scripts disponíveis
+- Estrutura do projeto
+- Contribuindo / Forks
+- Licença
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Visão geral
+Projeto inicializado com Vite e React, utilizando TypeScript e Material UI (MUI) para a interface. Ideal para quem deseja explorar exemplos e criar variações do projeto.
 
-## Expanding the ESLint configuration
+## Requisitos
+- Node.js LTS (recomendado)
+- npm (ou pnpm/yarn, se preferir)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Como executar
+1. Instale as dependências:
+   `npm install`
+2. Inicie o servidor de desenvolvimento:
+   `npm run dev`
+3. Acesse o endereço mostrado no terminal (por padrão, http://localhost:5173).
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Scripts disponíveis
+- dev: roda o servidor de desenvolvimento Vite
+- build: gera o build de produção (tsc + vite build)
+- preview: pré-visualiza o build de produção
+- lint: executa o ESLint
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Estrutura do projeto
+- src/: código-fonte da aplicação (componentes, rotas, etc.)
+- public/: arquivos públicos/estáticos
+- vite.config.ts: configuração do Vite
+- tsconfig*.json: configurações do TypeScript
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Contribuindo / Forks
+- Você pode forkar este repositório e fazer suas próprias versões livremente.
+- Pull Requests são bem-vindos! Sinta-se à vontade para propor melhorias e correções.
+- Observação importante: o uso é não comercial. Você não pode vender este software ou versões derivadas. Consulte a seção de Licença abaixo para detalhes.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Licença
+Uso e forks permitidos. É proibido vender o software, cobrar pelo acesso (incl. SaaS) ou redistribuir comercialmente versões derivadas. Veja LICENSE.
