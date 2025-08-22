@@ -1,7 +1,7 @@
-import {DefaultContainer} from "@components/shared/DefaultContainer.tsx";
+import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {SorteioNumericoPage} from "@shared/random/SorteioNumericoPage.tsx";
+import {SorteioPage} from "@components/random/pages/SorteioPage.tsx";
 import {Tab, Tabs} from '@mui/material'
 
 type tabType = 'numeros' | 'nomes'
@@ -32,7 +32,8 @@ export function SorteioAleatorioPage() {
             <Tab value={'numeros'} label={'Sorteio numerico'}/>
             <Tab value={'nomes'} label={'Sorteio nomeado'}/>
         </Tabs>
-        {tab == 'numeros' && <SorteioNumericoPage/>}
+        <SorteioPage mode={tab == "numeros" ? 'number' : 'string'}/>
+
 
     </DefaultContainer>)
 }

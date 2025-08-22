@@ -1,8 +1,8 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link as RouteLink , Outlet} from "react-router-dom";
 import {Menu} from "@mui/icons-material";
 import {DrawerMenu} from "./DrawerMenu.tsx";
 import {useState} from "react";
-import {Box, Grid, Typography, Paper, IconButton} from "@mui/material";
+import {Box, Grid, Typography, Paper, IconButton, Link} from "@mui/material";
 
 export function AppLayout() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -13,7 +13,7 @@ export function AppLayout() {
             <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
                 <Menu/>
             </IconButton>
-            <Typography variant={'button'} component={Link} to={'/'}>Inicio</Typography>
+            <Link variant={'button'} component={RouteLink} to={'/'}>Inicio</Link>
         </Grid>
         <Grid gap={1} sx={{my: 2, mx: 5, p: 1}} columns={12}>
             <Outlet/>
