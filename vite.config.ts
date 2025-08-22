@@ -1,8 +1,7 @@
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
-// Nota: Grande parte das configurações de build(mais especificamente o manual chunks
-// e o dropmode) foram escrito pela IA Junie, da Jetbrains
+
 // https://vite.dev/config/
 export default defineConfig(({mode}) => ({
     plugins: [
@@ -22,22 +21,11 @@ export default defineConfig(({mode}) => ({
         rollupOptions: {
             treeshake: true,
             output: {
-                // Prefer dedicated chunks for core libs; merge the rest into a single vendor to avoid many tiny files
-                manualChunks: (id) => {
-                    const libs = [
-                        {name: 'react', pkgs: ['react', 'react-dom']},
-                        {name: 'mui', pkgs: ['@mui/material', '@mui/icons-material']},
-                        {name: 'emotion', pkgs: ['@emotion/react', '@emotion/styled']},
-                        {name: 'router', pkgs: ['react-router-dom']},
-                    ]
-                    const normalized = id.split('\\').join('/')
-                    if (normalized.includes('node_modules')) {
-                        for (const {name, pkgs} of libs) {
-                            if (pkgs.some(pkg => normalized.includes(`node_modules/${pkg}/`))) return name
-                        }
-                        return 'vendor'
-                    }
-                    return undefined
+                manualChunks: {
+                    react: ['react', 'react-dom'],
+                    router: ['react-router-dom'],
+                    emotion: ['@emotion/react', '@emotion/styled'],
+                    mui: ['@mui/material', '@mui/icons-material'],
                 },
                 chunkFileNames: 'assets/chunks/[name]-[hash].js',
                 entryFileNames: 'assets/chunks/[name]-[hash].js',
