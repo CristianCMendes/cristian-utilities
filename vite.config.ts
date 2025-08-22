@@ -16,7 +16,14 @@ export default defineConfig(({mode}) => {
             react(),
             tsconfigPaths(),
             // Usa a variável do .env carregada via loadEnv
-            VitePWA({manifest: {...manifest, start_url: startUrl}})
+            VitePWA({
+                manifest: {...manifest, start_url: startUrl},
+                registerType: 'autoUpdate',
+                workbox: {
+                    navigateFallback: '/index.html',
+                    globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}']
+                }
+            })
         ],
         build: {
             target: 'es2020',
