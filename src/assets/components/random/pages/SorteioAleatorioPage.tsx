@@ -2,7 +2,7 @@ import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {SorteioPage} from "@components/random/pages/SorteioPage.tsx";
-import {Tab, Tabs} from '@mui/material'
+import {Grid, Tab, Tabs} from '@mui/material'
 
 type tabType = 'numeros' | 'nomes'
 
@@ -23,16 +23,21 @@ export function SorteioAleatorioPage() {
     }, [location.hash]);
 
     return (<DefaultContainer title={'sorteio aleatorio'}>
-        <Tabs value={tab} onChange={(_, v) => {
-            navigate({
-                pathname: location.pathname,
-                hash: v?.toString(),
-            })
-        }}>
-            <Tab value={'numeros'} label={'Sorteio numerico'}/>
-            <Tab value={'nomes'} label={'Sorteio nomeado'}/>
-        </Tabs>
-        <SorteioPage mode={tab == "numeros" ? 'number' : 'string'}/>
+        <Grid size={12}>
+            <Tabs value={tab} variant={'scrollable'}
+                  onChange={(_, v) => {
+                      navigate({
+                          pathname: location.pathname,
+                          hash: v?.toString(),
+                      })
+                  }}>
+                <Tab value={'numeros'} label={'Sorteio numerico'}/>
+                <Tab value={'nomes'} label={'Sorteio nomeado'}/>
+            </Tabs>
+        </Grid>
+        <Grid size={12}>
+            <SorteioPage mode={tab == "numeros" ? 'number' : 'string'}/>
+        </Grid>
 
 
     </DefaultContainer>)

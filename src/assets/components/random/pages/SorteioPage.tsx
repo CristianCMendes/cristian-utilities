@@ -151,19 +151,19 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
         <DefaultContainer rowSpacing={1.5}>
             {mode === 'number' ? (
                 <>
-                    <Grid size={{sm: 6, md: 4}}>
+                    <Grid size={{xs: 12, sm: 6, md: 4}}>
                         <TextField label={'Minimo'}
                                    value={numParams.min}
                                    onChange={e => setNumParams({...numParams, min: asInt(e.target.value)})}/>
                     </Grid>
-                    <Grid size={{sm: 6, md: 4}}>
+                    <Grid size={{xs: 12, sm: 6, md: 4}}>
                         <TextField label={'Maximo'}
                                    value={numParams.max}
                                    onChange={e => setNumParams({...numParams, max: asInt(e.target.value)})}/>
                     </Grid>
-                    <Grid size={{sm: 12, md: 4}} container justifyContent={'end'}>
+                    <Grid size={{xs: 12, sm: 12, md: 4}} container justifyContent={'end'}>
                         <Grid/>
-                        <Grid size={{sm: 4, md: 12}}>
+                        <Grid size={{xs: 12, sm: 4, md: 12}}>
                             <TextField label={'Quantidade'}
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
@@ -173,14 +173,14 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                     </Grid>
                     <Grid size={12} container alignItems={'center'} justifyItems={'center'}
                           justifyContent={'space-between'}>
-                        <Grid size={4}>
+                        <Grid size={{xs: 12, sm: 12, md: 4}}>
                             <FormControlLabel label={'Permitir repetição'} control={<Switch checked={numParams.repeat}
                                                                                             onChange={(_, v) => setNumParams({
                                                                                                 ...numParams,
                                                                                                 repeat: v
                                                                                             })}/>}/>
                         </Grid>
-                        <Grid size={8}>
+                        <Grid size={{xs: 12, sm: 12, md: 8}}>
                             <ButtonGroup fullWidth variant={'contained'} size={'medium'}
                                          disabled={qtdInvalida != null || loading}>
                                 <Button disabled={rolls.length == 0 || loading}
@@ -195,27 +195,31 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                 </>
             ) : (
                 <>
-                    <Grid size={{sm: 12, md: 8}}>
+                    <Grid size={12}>
                         <Grid container spacing={1}>
                             <Grid size={12}>
-                                <TextField label={'Adicionar opção'}
-                                           value={strParams.input}
-                                           onChange={e => setStrParams({...strParams, input: e.target.value})}
-                                           slotProps={{
-                                               input: {
-                                                   endAdornment: <IconButton onClick={addOptionsFromInput}
-                                                                             disabled={strParams.input.trim().length === 0}>
-                                                       <Send/>
-                                                   </IconButton>
-                                               }
-                                           }}
-                                           onKeyDown={e => {
-                                               if (e.key === 'Enter') {
-                                                   e.preventDefault();
-                                                   addOptionsFromInput();
-                                               }
-                                           }}
-                                           placeholder={'Digite um valor e pressione Enter'}/>
+                                <form noValidate>
+                                    <TextField label={'Adicionar opção'}
+                                               value={strParams.input}
+                                               enterKeyHint={'enter'}
+                                               onChange={e => setStrParams({...strParams, input: e.target.value})}
+                                               slotProps={{
+                                                   input: {
+                                                       endAdornment: <IconButton onClick={addOptionsFromInput}
+                                                                                 disabled={strParams.input.trim().length === 0}>
+                                                           <Send/>
+                                                       </IconButton>,
+                                                       enterKeyHint: 'enter'
+                                                   }
+                                               }}
+                                               onKeyDown={e => {
+                                                   if (e.key === 'Enter') {
+                                                       e.preventDefault();
+                                                       addOptionsFromInput();
+                                                   }
+                                               }}
+                                               placeholder={'Digite um valor e pressione Enter'}/>
+                                </form>
                             </Grid>
                             <Grid size={12}>
                                 <Stack direction={'row'} spacing={1} useFlexGap flexWrap={'wrap'}>
@@ -227,9 +231,9 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid size={{sm: 12, md: 4}} container justifyContent={'end'}>
+                    <Grid size={12} container justifyContent={'end'}>
                         <Grid/>
-                        <Grid size={{sm: 4, md: 12}}>
+                        <Grid size={4}>
                             <TextField label={'Quantidade'}
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
@@ -239,14 +243,14 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                     </Grid>
                     <Grid size={12} container alignItems={'center'} justifyItems={'center'}
                           justifyContent={'space-between'}>
-                        <Grid size={4}>
+                        <Grid size={{xs: 12, sm: 4}}>
                             <FormControlLabel label={'Permitir repetição'} control={<Switch checked={strParams.repeat}
                                                                                             onChange={(_, v) => setStrParams({
                                                                                                 ...strParams,
                                                                                                 repeat: v
                                                                                             })}/>}/>
                         </Grid>
-                        <Grid size={8}>
+                        <Grid size={{xs: 12, sm: 8}}>
                             <ButtonGroup fullWidth variant={'contained'} size={'medium'}
                                          disabled={qtdInvalida != null || loading}>
                                 <Button disabled={rolls.length == 0 || loading}
