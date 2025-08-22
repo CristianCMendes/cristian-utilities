@@ -1,6 +1,6 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {createTheme, CssBaseline as MuiCssBaseline, ThemeProvider} from '@mui/material'
+import {createTheme, CssBaseline , ThemeProvider} from '@mui/material'
 import {AppRoutes} from "@routes/AppRoutes.tsx";
 import {BrowserRouter} from "react-router-dom";
 
@@ -22,8 +22,8 @@ const theme = createTheme({
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <MuiCssBaseline/>
         <ThemeProvider theme={theme}>
+            <CssBaseline/>
             <BrowserRouter>
                 <AppRoutes/>
             </BrowserRouter>
