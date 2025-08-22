@@ -1,12 +1,16 @@
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import {type ManifestOptions, VitePWA} from 'vite-plugin-pwa'
+import manifest from './manifest.json'
+
 
 // https://vite.dev/config/
 export default defineConfig(({mode}) => ({
     plugins: [
         react(),
         tsconfigPaths(),
+        VitePWA({manifest: manifest as ManifestOptions})
     ],
     build: {
         target: 'es2020',
