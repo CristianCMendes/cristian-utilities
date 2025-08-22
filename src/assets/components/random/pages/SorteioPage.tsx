@@ -231,9 +231,9 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid size={{xs: 12, sm: 12, md: 4}} container justifyContent={'end'}>
+                    <Grid size={12} container justifyContent={'end'}>
                         <Grid/>
-                        <Grid size={{sm: 4, md: 12}}>
+                        <Grid size={4}>
                             <TextField label={'Quantidade'}
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
