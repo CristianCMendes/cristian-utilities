@@ -7,3 +7,4 @@ export function asInt(n: string | number | undefined): number {
 
     return isNaN(v) ? 0 : v
 }
+
