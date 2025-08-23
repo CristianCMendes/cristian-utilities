@@ -221,25 +221,25 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                                                placeholder={'Digite um valor e pressione Enter'}/>
                                 </form>
                             </Grid>
-                            <Grid size={12}>
-                                <Stack direction={'row'} spacing={1} useFlexGap flexWrap={'wrap'}>
-                                    {strParams.options.map((opt, idx) => (
-                                        <Chip key={`${idx}-${opt}`} label={opt} onDelete={() => removeOptionAt(idx)}
-                                              color={rolledStrings.has(opt) ? 'primary' : 'default'}/>
-                                    ))}
-                                </Stack>
-                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid size={12} container justifyContent={'end'}>
                         <Grid/>
-                        <Grid size={4}>
+                        <Grid size={{xs: 8, sm: 6, md: 4}}>
                             <TextField label={'Quantidade'}
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
                                        value={strParams.qtd}
                                        onChange={e => setStrParams({...strParams, qtd: asInt(e.target.value)})}/>
                         </Grid>
+                    </Grid>
+                    <Grid size={12}>
+                        <Stack direction={'row'} spacing={1} useFlexGap flexWrap={'wrap'}>
+                            {strParams.options.map((opt, idx) => (
+                                <Chip key={`${idx}-${opt}`} label={opt} onDelete={() => removeOptionAt(idx)}
+                                      color={rolledStrings.has(opt) ? 'primary' : 'default'}/>
+                            ))}
+                        </Stack>
                     </Grid>
                     <Grid size={12} container alignItems={'center'} justifyItems={'center'}
                           justifyContent={'space-between'}>
