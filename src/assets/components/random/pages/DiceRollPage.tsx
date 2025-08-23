@@ -1,10 +1,21 @@
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {memo, useCallback, useMemo, useState} from "react";
-import {Button, FormControlLabel, Grid, IconButton, Menu, MenuItem, Paper, Switch, Typography} from "@mui/material";
+import {
+    Button,
+    ButtonGroup,
+    FormControlLabel,
+    Grid,
+    IconButton,
+    Menu,
+    MenuItem,
+    Paper,
+    Switch,
+    Typography
+} from "@mui/material";
 import {type DiceType, DiceTypes, DiceTypeValue} from "@assets/models/dice/DiceType.ts";
 import type {IDiceRoll} from "@assets/models/dice/IDiceRoll.ts";
 import {randomUtils} from "@utils/randomUtils.ts";
-import {Casino, Delete} from '@mui/icons-material'
+import {Add, Casino, CleaningServices, Delete} from '@mui/icons-material'
 
 
 const Dice = memo(({diceType, onRemove, reRoll}: {
@@ -41,13 +52,14 @@ const AddButton = memo(({onAdd}: {
                 {DiceTypes.map((x) => {
                     return <MenuItem value={x} onClick={() => {
                         onAdd(x)
-                        setAnchor(null)
                     }}>{x}</MenuItem>
                 })}
             </Menu>
-            <Button variant={'outlined'} onClick={(e) => {
-                setAnchor(e.currentTarget)
-            }}>Adicionar</Button>
+            <Button variant={'outlined'}
+                    endIcon={<Add/>}
+                    onClick={(e) => {
+                        setAnchor(e.currentTarget)
+                    }}>Adicionar</Button>
         </>
     )
 })
@@ -64,6 +76,19 @@ export function DiceRollPage() {
         return dices.reduce((acc, v) => acc + v.roll, 0)
     }, [dices]);
 
+    const diceCount = useMemo(() => {
+        const map = new Map<DiceType, { dice: DiceType, count: number, sum: number }>()
+        for (const d of dices) {
+            const curr = map.get(d.dice) ?? {dice: d.dice, count: 0, sum: 0}
+            curr.count += 1
+            curr.sum += d.roll
+            map.set(d.dice, curr)
+        }
+        const counts = Array.from(map.values())
+        counts.sort((a, b) => b.count - a.count)
+        return {counts, length: dices.length}
+    }, [dices])
+
     const rollAll = useCallback(() => {
         const newDices = [...dices]
         for (const d of newDices) {
@@ -75,7 +100,12 @@ export function DiceRollPage() {
     return <DefaultContainer title={"Rolagem de dados"}>
         <Grid size={12} container justifyContent={'space-between'} alignItems={'center'} mb={1}>
             <Grid>
-                <Button variant={'outlined'} onClick={rollAll}>Rolar</Button>
+                <ButtonGroup fullWidth disabled={dices.length == 0}>
+                    <Button variant={'outlined'} endIcon={<Casino/>} onClick={rollAll}>Rolar</Button>
+                    <Button color={'warning'} endIcon={<CleaningServices/>} variant={'outlined'} onClick={() => {
+                        setDices([])
+                    }}>Limpar</Button>
+                </ButtonGroup>
             </Grid>
             <Grid container spacing={1}>
                 <Grid>
@@ -119,7 +149,12 @@ export function DiceRollPage() {
                 })}
             </Grid>
             <Grid size={12}>
-                <Typography>Total: {rollCount}</Typography>
+                <Typography>
+                    Total {rollCount} (em {diceCount.length} dados)
+                    {diceCount.counts.map(x => {
+                        return <Typography key={x.dice}>{x.dice} total {x.sum} (em {x.count} dados)</Typography>
+                    })}
+                </Typography>
             </Grid>
         </Grid>
     </DefaultContainer>
