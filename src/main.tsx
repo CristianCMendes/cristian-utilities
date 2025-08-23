@@ -22,6 +22,12 @@ const theme = createTheme({
     }
 })
 
+document.addEventListener('keydown', function (event) {
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        // Eu odeio apertar sem querer ctrl + s no meu navegador...
+    }
+});
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
