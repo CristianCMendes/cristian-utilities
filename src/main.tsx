@@ -4,6 +4,8 @@ import {createTheme, CssBaseline, ThemeProvider} from '@mui/material'
 import {AppRoutes} from "@routes/AppRoutes.tsx";
 import {BrowserRouter} from "react-router-dom";
 import {registerPWA} from "./pwa-registrer.ts";
+import {Analytics} from "@vercel/analytics/react"
+import {SpeedInsights} from "@vercel/speed-insights/react"
 
 import '@fontsource/inter'
 
@@ -31,6 +33,8 @@ document.addEventListener('keydown', function (event) {
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
+        <Analytics/>
+        <SpeedInsights/>
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <BrowserRouter>
