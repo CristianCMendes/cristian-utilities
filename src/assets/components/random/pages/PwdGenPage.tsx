@@ -1,21 +1,11 @@
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
-import {memo, useEffect, useState} from "react";
-import {Button, FormControlLabel, Grid, Switch, TextField} from "@mui/material";
+import {memo, useEffect, useMemo, useState} from "react";
+import {Button, ButtonGroup, FormControlLabel, Grid, IconButton, Switch, TextField, Typography} from "@mui/material";
 import {asInt} from "@utils/numbers.ts";
-
-interface ruleType {
-    active: boolean;
-    size?: number;
-}
-
-interface ruleset {
-    length: number;
-    uppercase: ruleType
-    lowercase: ruleType
-    numbers: ruleType
-    symbols: ruleType
-    genCount: number
-}
+import type {IRuleType} from "@assets/models/pwdRules/IRuleType.ts";
+import type {IRuleSet} from "@assets/models/pwdRules/IRuleSet.ts";
+import {usePwdGen} from "@assets/hooks/usePwdGen.tsx";
+import {ContentCopy} from '@mui/icons-material'
 
 const RuleTextfield = memo(function RuleTextfield({
                                                       label,
@@ -24,8 +14,8 @@ const RuleTextfield = memo(function RuleTextfield({
                                                       max
                                                   }: {
     label: string;
-    value: ruleType;
-    setValue: (r: ruleType) => void;
+    value: IRuleType;
+    setValue: (r: IRuleType) => void;
     max?: number
 }) {
     // Caso altere a quantidade automaticamente ativa
@@ -65,8 +55,28 @@ const RuleTextfield = memo(function RuleTextfield({
     );
 });
 
+const PwdHold = memo((props: { pwds: string[] }) => {
+
+    return <Grid container size={12} spacing={1}>
+        {props.pwds.map((x) => {
+            return <Grid size={{xs: 6, sm: 4, md: 3}}><TextField variant={'outlined'} size={'small'} value={x} disabled
+                                                                 slotProps={{
+                                                                     input: {
+                                                                         endAdornment: <IconButton size={'small'}
+                                                                                                   onClick={() => {
+                                                                                                       navigator.clipboard.writeText(x).then(() => {
+                                                                                                       })
+                                                                                                   }}>
+                                                                             <ContentCopy/>
+                                                                         </IconButton>,
+                                                                     }
+                                                                 }}/></Grid>
+        })}
+    </Grid>
+})
+
 export function PwdGenPage() {
-    const [rules, setRules] = useState<ruleset>({
+    const [rules, setRules] = useState<IRuleSet>({
         length: 12,
         uppercase: {active: true},
         lowercase: {active: true},
@@ -75,20 +85,27 @@ export function PwdGenPage() {
         genCount: 1
     });
 
+    const {setRules: setHookRules, generatePwds} = usePwdGen();
     const [pwds, setPwds] = useState<string[]>([]);
+
+    const currRulesNeeds = useMemo(() => {
+        const upperNeeds = rules.uppercase.active ? rules.uppercase.size ?? 0 : 0;
+        const lowerNeeds = rules.lowercase.active ? rules.lowercase.size ?? 0 : 0;
+        const numberNeeds = rules.numbers.active ? rules.numbers.size ?? 0 : 0;
+        const symbolNeeds = rules.symbols.active ? rules.symbols.size ?? 0 : 0;
+
+        return upperNeeds + lowerNeeds + numberNeeds + symbolNeeds;
+    }, [rules.uppercase.active, rules.lowercase.active, rules.numbers.active, rules.symbols.active])
+
+
+    useEffect(() => {
+        setHookRules(rules);
+    }, [rules, setHookRules]);
 
     return (<DefaultContainer title={'gerador de senhas'} rowSpacing={0.5}>
         <Grid size={12} container justifyContent={'end'}>
-            <Grid size={{xs: 12, sm: 6}}>
-                <TextField label={'Senhas geradas'}
-                           variant={'filled'}
-                           value={rules.genCount}
-                           onChange={e => {
-                               setRules({...rules, genCount: asInt(e.target.value)})
-                           }}
-                />
-            </Grid>
-            <Grid size={{xs: 12, sm: 6}}>
+
+            <Grid size={12}>
                 <TextField label={'Tamanho'}
                            variant={'filled'}
                            value={rules.length}
@@ -114,20 +131,42 @@ export function PwdGenPage() {
                                }}/>
             </Grid>
             <Grid container size={12}>
-                <RuleTextfield label={'Numeros'} value={rules.numbers} setValue={(r) => {
+                <RuleTextfield label={'Numeros'}
+                               max={rules.length}
+                               value={rules.numbers} setValue={(r) => {
                     setRules({...rules, numbers: r})
                 }}/>
             </Grid>
             <Grid container size={12}>
-                <RuleTextfield label={'Caracteres especiais'} value={rules.symbols} setValue={(r) => {
+                <RuleTextfield label={'Caracteres especiais'}
+                               max={rules.length}
+                               value={rules.symbols} setValue={(r) => {
                     setRules({...rules, symbols: r})
                 }}/>
             </Grid>
             <Grid container size={12} justifyContent={'space-between'}>
-                <Grid/>
-                <Grid size={{xs: 12, sm: 4}}>
-                    <Button>Gerar</Button>
-                </Grid>
+                <ButtonGroup fullWidth>
+                    <Grid size={{xs: 12, sm: 6}}>
+                        <TextField label={'Quantidade'}
+                                   variant={'filled'}
+                                   value={rules.genCount}
+                                   onChange={e => {
+                                       setRules({...rules, genCount: asInt(e.target.value)})
+                                   }}
+                        />
+                    </Grid>
+                    <Grid size={{xs: 12, sm: 6}}>
+                        <Button
+                            sx={{height: '100%', maxHeight: '100%'}}
+                            disabled={currRulesNeeds > rules.length}
+                            variant={'contained'}
+                            onClick={() => setPwds(generatePwds(rules.genCount))}>{currRulesNeeds > rules.length ? `Suas regras precisam de no minimo ${currRulesNeeds} caracteres` : 'Gerar'}</Button>
+                    </Grid>
+                </ButtonGroup>
+            </Grid>
+            <Grid size={12} container>
+                <Grid size={12}><Typography variant={'caption'}>Senhas geradas</Typography></Grid>
+                <PwdHold pwds={pwds}/>
             </Grid>
         </Grid>
     </DefaultContainer>)
