@@ -2,8 +2,9 @@ import {Link as RouteLink, useLocation} from "react-router-dom";
 import {Casino, Home, Password, People, QrCode2, Shuffle} from "@mui/icons-material";
 import * as React from "react";
 import {memo, useEffect} from "react";
-import {routeAsPath, type ROUTES_KEYS} from "@utils/routeNames.ts";
+import {routeAsPath, type ROUTES_KEYS} from "@routes/appRoutes.ts";
 import {Badge, Link, Divider, Drawer, ListItem, Stack, Typography} from "@mui/material";
+import {useAuth} from "@assets/context/api/useAuth.ts";
 
 interface DrawerMenuProps {
     open: boolean;
@@ -11,6 +12,7 @@ interface DrawerMenuProps {
 }
 
 export function DrawerMenu(props: DrawerMenuProps) {
+    const {user} = useAuth()
     const {open, onClose} = props;
     const location = useLocation()
 
@@ -44,6 +46,7 @@ export function DrawerMenu(props: DrawerMenuProps) {
                 <Li label={'Rolagem de dados'} url={'rolagemDados'} icon={<Casino/>}/>
                 <Li label={'Amigo secreto'} url={'amigoSecreto'}
                     icon={<Badge variant={'standard'} badgeContent={'?'}><People/></Badge>}/>
+                {user == null && <Li label={'Login'} url={'login'} icon={<People/>}/>}
             </Stack>
             <Stack sx={{p: 2}} gap={1}>
                 <ListItem sx={{display: 'flex', justifyContent: 'center'}}>

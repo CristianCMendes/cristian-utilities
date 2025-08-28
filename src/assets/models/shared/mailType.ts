@@ -1,0 +1,1 @@
+export type mailType = `${string}@${string}.${string}`

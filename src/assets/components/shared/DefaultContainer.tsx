@@ -3,6 +3,7 @@ import * as React from "react";
 
 interface DefaultContainerProps extends React.ComponentProps<typeof Grid> {
     title?: string,
+    titleVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2' | 'caption' | 'button' | 'overline',
     hideHeader?: boolean,
     component?: React.ElementType
 }
@@ -13,13 +14,14 @@ export function DefaultContainer({
                                      p = 1.5,
                                      my = p,
                                      component = Paper,
+                                     titleVariant = 'h6',
                                      ...props
                                  }: DefaultContainerProps) {
     return (<Grid container {...props}
                   component={component}>
             {!hideHeader &&
                 <Grid size={12} my={my}>
-                    <Typography variant={'h4'} textAlign={'center'}>
+                    <Typography variant={titleVariant} textAlign={'center'}>
                         {title}
                     </Typography>
                 </Grid>

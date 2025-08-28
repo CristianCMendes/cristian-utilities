@@ -1,10 +1,11 @@
 import {Route, Routes} from "react-router-dom";
 import {AppLayout} from "@shared/AppLayout.tsx";
 import {HomePage} from "@shared/pages/HomePage.tsx";
-import {ROUTES} from "@utils/routeNames.ts";
 import {SorteioAleatorioPage} from "@components/random/pages/SorteioAleatorioPage.tsx";
 import {PwdGenPage} from "@components/random/pages/PwdGenPage.tsx";
 import {DiceRollPage} from "@components/random/pages/DiceRollPage.tsx";
+import {LoginPage} from "@shared/pages/LoginPage.tsx";
+import {ROUTES} from "@routes/appRoutes.ts";
 
 export function AppRoutes() {
     return (<Routes>
@@ -12,7 +13,8 @@ export function AppRoutes() {
             <Route path={''} element={<HomePage/>}/>,
             <Route path={ROUTES.sorteioAleatorio} element={<SorteioAleatorioPage/>}/>,
             <Route path={ROUTES.geradorSenhas} element={<PwdGenPage/>}/>,
-            <Route path={ROUTES.rolagemDados} element={<DiceRollPage/>}/>
+            <Route path={ROUTES.rolagemDados} element={<DiceRollPage/>}/>,
+            <Route path={ROUTES.login} element={<LoginPage/>}/>
         ]}/>
     </Routes>)
 }

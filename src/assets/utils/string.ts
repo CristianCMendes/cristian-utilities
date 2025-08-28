@@ -15,3 +15,8 @@ export function removeNonNumeric(str: string, tipo: tipoPrimitivos = 'string') {
 
     return val
 }
+
+export function isMail(email: string) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email)
+}

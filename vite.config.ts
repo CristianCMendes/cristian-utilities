@@ -10,6 +10,10 @@ const manifest = rawManifest as ManifestOptions
 export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '')
     const startUrl = env.START_URL
+    const apiUrl = env.API_URL
+
+    console.log(`API_URL: ${apiUrl}`)
+    console.log(`START_URL: ${startUrl}`)
 
     return {
         plugins: [
@@ -55,5 +59,14 @@ export default defineConfig(({mode}) => {
             // Remove console/debugger only in production to keep DX in dev
             drop: mode === 'production' ? ['console', 'debugger'] : [],
         },
+        server: {
+            proxy: {
+                '^/api/': {
+                    target: env.API_URL,
+                    secure: false,
+                }
+            },
+            host: true,
+        }
     }
 })
