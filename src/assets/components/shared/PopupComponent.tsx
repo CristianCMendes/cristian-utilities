@@ -13,9 +13,10 @@ export function PopupComponent({content, onClose, ...containerProps}: PopupCompo
             onClose?.()
         }
     }} style={{
-        zIndex: 10000, backdropFilter: 'blur(5px)'
+        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+        zIndex: 999, backdropFilter: 'blur(5px)'
     }}>
-        <DefaultContainer maxWidth={'95%'}
+        <DefaultContainer maxWidth={'90%'}
                           {...containerProps}>
             {content}
         </DefaultContainer>

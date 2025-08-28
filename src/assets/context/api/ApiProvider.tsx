@@ -18,7 +18,7 @@ interface IMonitorPromise {
 
 export const ApiProvider = ({children}: React.PropsWithChildren) => {
     const [user, setUser] = useState<IUserAuth>()
-    const {toastFromResponse} = useToast()
+    const {toastFromResponse, toastFromMessage} = useToast()
 
     useEffect(() => {
         const userstore = localStorage.getItem('user')
@@ -55,7 +55,7 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
         const {name, email, password} = data
         const endpoint = API_ROUTES.account.register({name, email: email, password})
         return request(endpoint).then(x => {
-            if (x.statusCode == 201) {
+            if (x.statusCode == 201 && x.data?.token != null) {
                 setUser(x.data)
             }
             toastFromResponse(x)
@@ -79,9 +79,14 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
     const logout = () => {
         setUser(undefined)
         localStorage.removeItem('user')
+        toastFromMessage({
+            type: 'success',
+            message: 'Desconectado com sucesso'
+        })
     }
 
-    const [promises] = useState<IMonitorPromise[]>([]);
+    const [promises, setPromises] = useState<IMonitorPromise[]>([]);
+
 
     function buildEndpoint(routedata: IApiRoute) {
         const {pagination, query} = routedata
@@ -119,7 +124,10 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
     }
 
     const isLoading = useMemo(() => {
-        return promises.filter(x => !x.ended).length > 0
+
+        return promises.filter(x => {
+            return !x.ended || dayjs().diff(dayjs(x.timestamp), 'milliseconds') < 1
+        }).length > 0
     }, [promises])
 
 
@@ -151,19 +159,19 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
 
         const promise: IMonitorPromise = {
             promise: res,
-            timestamp: dayjs().unix(),
+            timestamp: dayjs().valueOf(),
             ended: false,
             endpoint: endpoint
         }
 
         if (!options?.ignoreMonitor) {
-            promises.push(promise)
+            setPromises(x => [...x, promise])
         }
 
         return await res.then(x => x.json() as unknown as IResponse<T>).finally(() => {
             promise.ended = true
             setInterval(() => {
-                promises.splice(promises.indexOf(promise), 1)
+                setPromises(prev => prev.filter(x => x.promise != promise.promise))
             }, 2500)
         }) ?? {
             statusCode: 500,

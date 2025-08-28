@@ -1,7 +1,7 @@
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {memo, useEffect, useMemo, useState} from "react";
 import {Button, ButtonGroup, FormControlLabel, Grid, IconButton, Switch, TextField, Typography} from "@mui/material";
-import {asInt} from "@utils/numbers.ts";
+import {toInt} from "@utils/numbers.ts";
 import type {IRuleType} from "@assets/models/pwdRules/IRuleType.ts";
 import type {IRuleSet} from "@assets/models/pwdRules/IRuleSet.ts";
 import {usePwdGen} from "@assets/hooks/usePwdGen.tsx";
@@ -31,7 +31,7 @@ const RuleTextfield = memo(function RuleTextfield({
             value={value.size ?? 0}
             focused={value.active}
             onChange={(e) => {
-                setValue({...value, size: Math.min(asInt(e.target.value), max ?? 999)});
+                setValue({...value, size: Math.min(toInt(e.target.value), max ?? 999)});
             }}
             slotProps={{
                 input: {
@@ -110,7 +110,7 @@ export function PwdGenPage() {
                            variant={'filled'}
                            value={rules.length}
                            onChange={e => {
-                               setRules({...rules, length: asInt(e.target.value)})
+                               setRules({...rules, length: toInt(e.target.value)})
                            }}
                 />
             </Grid>
@@ -151,7 +151,7 @@ export function PwdGenPage() {
                                    variant={'filled'}
                                    value={rules.genCount}
                                    onChange={e => {
-                                       setRules({...rules, genCount: asInt(e.target.value)})
+                                       setRules({...rules, genCount: toInt(e.target.value)})
                                    }}
                         />
                     </Grid>

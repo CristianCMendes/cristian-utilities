@@ -1,6 +1,6 @@
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {memo, useEffect, useMemo, useState} from "react";
-import {asInt} from "@utils/numbers.ts";
+import {toInt} from "@utils/numbers.ts";
 import {
     Backdrop,
     Button,
@@ -154,12 +154,12 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                     <Grid size={{xs: 12, sm: 6, md: 4}}>
                         <TextField label={'Minimo'}
                                    value={numParams.min}
-                                   onChange={e => setNumParams({...numParams, min: asInt(e.target.value)})}/>
+                                   onChange={e => setNumParams({...numParams, min: toInt(e.target.value)})}/>
                     </Grid>
                     <Grid size={{xs: 12, sm: 6, md: 4}}>
                         <TextField label={'Maximo'}
                                    value={numParams.max}
-                                   onChange={e => setNumParams({...numParams, max: asInt(e.target.value)})}/>
+                                   onChange={e => setNumParams({...numParams, max: toInt(e.target.value)})}/>
                     </Grid>
                     <Grid size={{xs: 12, sm: 12, md: 4}} container justifyContent={'end'}>
                         <Grid/>
@@ -168,7 +168,7 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
                                        value={numParams.qtd}
-                                       onChange={e => setNumParams({...numParams, qtd: asInt(e.target.value)})}/>
+                                       onChange={e => setNumParams({...numParams, qtd: toInt(e.target.value)})}/>
                         </Grid>
                     </Grid>
                     <Grid size={12} container alignItems={'center'} justifyItems={'center'}
@@ -230,7 +230,7 @@ export function SorteioPage({mode = 'number'}: SorteioPageProps) {
                                        error={qtdInvalida != undefined}
                                        helperText={qtdInvalida}
                                        value={strParams.qtd}
-                                       onChange={e => setStrParams({...strParams, qtd: asInt(e.target.value)})}/>
+                                       onChange={e => setStrParams({...strParams, qtd: toInt(e.target.value)})}/>
                         </Grid>
                     </Grid>
                     <Grid size={12}>

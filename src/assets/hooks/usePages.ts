@@ -17,12 +17,12 @@ export const usePages = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const routerNavigate = useNavigate()
 
-    function getTab<T>(tab: T): T {
-        return searchParams.get('tab_' + tab as string) as T
+    function getTab<T>(name: string): T {
+        return searchParams.get('tab_' + name as string) as T
     }
 
-    function setTab<T>(tab: T, value: T) {
-        setSearchParams({...searchParams, ['tab_' + tab as string]: value})
+    function setTab<T>(name: T, value: T) {
+        setSearchParams({...searchParams, ['tab_' + name as string]: value})
     }
 
     function navigate({to, options}: navigateProps) {

@@ -2,6 +2,8 @@ import type {IUser, IUserAuth} from "@assets/models/entities/user/IUser.ts";
 import type {IResponse} from "@assets/models/endpoints/IResponse.ts";
 import type {IPagination} from "@assets/models/endpoints/IPagination.ts";
 import type {mailType} from "@assets/models/shared/mailType.ts";
+import type {ISecretFriend} from "@assets/models/entities/secretFriend/ISecretFriend.ts";
+import type {IListSecretFriendDto} from "@assets/models/requests/IListSecretFriendDto.ts";
 
 const baseapi_v1 = `/api/v1`
 type method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
@@ -67,6 +69,17 @@ export const API_ROUTES = {
                 method: 'GET'
             } as IApiRoute<IUser[]>
         },
-
+    },
+    'secretFriend': {
+        url: baseapi_v1 + '/secretfriend',
+        'list': function (data: {filters: IListSecretFriendDto, pagination: IPagination}) {
+            const {filters, pagination} = data
+            return {
+                url: this.url + '/list',
+                method: 'GET',
+                query: filters,
+                pagination,
+            } as IApiRoute<ISecretFriend[]>
+        }
     }
 } as const

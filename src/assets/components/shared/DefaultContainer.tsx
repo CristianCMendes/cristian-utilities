@@ -15,11 +15,13 @@ export function DefaultContainer({
                                      my = p,
                                      component = Paper,
                                      titleVariant = 'h6',
+                                     size = 12,
                                      ...props
                                  }: DefaultContainerProps) {
     return (<Grid container {...props}
+                  size={size}
                   component={component}>
-            {!hideHeader &&
+            {!hideHeader && title != null &&
                 <Grid size={12} my={my}>
                     <Typography variant={titleVariant} textAlign={'center'}>
                         {title}

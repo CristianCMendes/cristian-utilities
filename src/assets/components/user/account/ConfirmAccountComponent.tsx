@@ -1,7 +1,7 @@
 import {Button, Grid, TextField} from "@mui/material";
 import type {mailType} from "@assets/models/shared/mailType.ts";
 import {useState} from "react";
-import {asInt} from "@utils/numbers.ts";
+import {toInt} from "@utils/numbers.ts";
 import type {IUser, IUserAuth} from "@assets/models/entities/user/IUser.ts";
 import {useAuth} from "@assets/context/api/useAuth.ts";
 import {isMail} from "@utils/string.ts";
@@ -43,7 +43,7 @@ export function ConfirmAccountComponent(props: ConfirmAccountComponentProps) {
         <Grid size={12}>
             <TextField label={'Token'} value={data.token}
                        error={!tokenValid}
-                       onChange={(e) => setData({...data, token: asInt(e.target.value)})}/>
+                       onChange={(e) => setData({...data, token: toInt(e.target.value)})}/>
         </Grid>
         <Grid size={12}>
             <Button fullWidth variant={'outlined'} onClick={handleConfirm} disabled={!allValid}>Confirmar</Button>

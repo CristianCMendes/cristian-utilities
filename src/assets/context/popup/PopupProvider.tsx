@@ -9,13 +9,13 @@ export const PopupProvider = ({children}: PropsWithChildren) => {
         setPopups([...popups, popup])
     }
 
-    const removePopup = (index: number) => {
-        setPopups(popups.filter((_, i) => i !== index))
+    const closePopup = (props?: { index?: number }) => {
+        setPopups(popups.filter((_, i) => i !== (props?.index ?? popups.length - 1)))
     }
 
-    return (<PopupContext.Provider value={{addPopup}}>
+    return (<PopupContext.Provider value={{addPopup, closePopup}}>
         {children}
         {popups.map((popup, index) => (
-            <PopupComponent key={index} {...popup} onClose={() => removePopup(index)}/>))}
+            <PopupComponent key={index} {...popup} onClose={() => closePopup({index})}/>))}
     </PopupContext.Provider>)
 }
