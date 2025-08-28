@@ -78,7 +78,7 @@ export function LoginPage() {
         }
     }, [mode])
 
-    if (user != null) return (
+    if (user != null) (
         navigate({
             to: {
                 pathname: "index"
