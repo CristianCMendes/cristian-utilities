@@ -2,15 +2,16 @@ import {defineConfig, loadEnv} from 'vite'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import {type ManifestOptions, VitePWA} from 'vite-plugin-pwa'
-import rawManifest from './manifest.json'
+import rawManifest from './manifest.json';
 
 const manifest = rawManifest as ManifestOptions
 
 // https://vite.dev/config/
 export default defineConfig(({mode}) => {
-    const env = loadEnv(mode, process.cwd(), '')
-    const startUrl = env.START_URL
-    const apiUrl = env.API_URL
+    const env = loadEnv(mode, process.cwd(), 'VITE_')
+    const startUrl = env.VITE_START_URL
+    const apiUrl = env.VITE_API_URL
+
 
     console.log(`API_URL: ${apiUrl}`)
     console.log(`START_URL: ${startUrl}`)
@@ -62,8 +63,11 @@ export default defineConfig(({mode}) => {
         server: {
             proxy: {
                 '^/api/': {
-                    target: env.API_URL,
+                    target: env.VITE_API_URL,
                     secure: false,
+                    headers: {
+                        'X-API-KEY': env.VITE_API_KEY,
+                    }
                 }
             },
             host: true,

@@ -81,7 +81,8 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
         localStorage.removeItem('user')
         toastFromMessage({
             type: 'success',
-            message: 'Desconectado com sucesso'
+            message: 'Desconectado com sucesso',
+            important: false,
         })
     }
 
@@ -126,7 +127,7 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
     const isLoading = useMemo(() => {
 
         return promises.filter(x => {
-            return !x.ended || dayjs().diff(dayjs(x.timestamp), 'milliseconds') < 1
+            return !x.ended || dayjs().diff(dayjs(x.timestamp), 'milliseconds') < 0.33
         }).length > 0
     }, [promises])
 
@@ -142,7 +143,8 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
                 pagination: {page: 1, pageSize: 10, ...endpoint.pagination},
                 messages: [{
                     message: "Muitas solicitações iguais, por favor, aguarde uns segundos, e tente novamente",
-                    type: "warning"
+                    type: "warning",
+                    important: false,
                 }]
             }
 
@@ -168,7 +170,17 @@ export const ApiProvider = ({children}: React.PropsWithChildren) => {
             setPromises(x => [...x, promise])
         }
 
-        return await res.then(x => x.json() as unknown as IResponse<T>).finally(() => {
+        return await res.then(x => x.json()).then((x: IResponse<T>) => {
+                console.log(x)
+
+                const importantMsgs = x.messages.filter(x => x.important)
+                if (importantMsgs.length > 0) {
+                    importantMsgs.forEach(x => toastFromMessage(x))
+                }
+
+                return x
+            }
+        ).finally(() => {
             promise.ended = true
             setInterval(() => {
                 setPromises(prev => prev.filter(x => x.promise != promise.promise))

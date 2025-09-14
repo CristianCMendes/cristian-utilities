@@ -18,8 +18,9 @@ export const useToast = () => {
         doToast()
     }
 
-    function toastFromResponse(response: IResponse) {
-        response.messages.forEach(x => toastFromMessage(x))
+    // ignoreImportant is used to ignore important messages, because they will be treated differently
+    function toastFromResponse(response: IResponse, ignoreImportant = true) {
+        response.messages.filter(x => ignoreImportant && !x.important || true).forEach(x => toastFromMessage(x))
     }
 
     return {toastFromMessage, toastFromResponse}

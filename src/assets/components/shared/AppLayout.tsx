@@ -1,10 +1,11 @@
 import {Link as RouteLink, Outlet} from "react-router-dom";
-import {Logout, Menu} from "@mui/icons-material";
+import {GitHub, Instagram, LinkedIn, Logout, Menu} from "@mui/icons-material";
 import {DrawerMenu} from "./DrawerMenu.tsx";
 import {useState} from "react";
 import {Box, Grid, IconButton, LinearProgress, Link, Paper, Typography} from "@mui/material";
 import {useAuth} from "@assets/context/api/useAuth.ts";
 import {useApi} from "@assets/context/api/useApi.ts";
+
 
 export function AppLayout() {
     const {user, logout} = useAuth()
@@ -40,14 +41,32 @@ export function AppLayout() {
         <Grid gap={1} sx={{my: 2, mx: 5, p: 1}} columns={12}>
             <Outlet/>
         </Grid>
-        <Box sx={{position: 'fixed', bottom: 0, width: '100%'}}>
-            <Typography sx={{
-                color: 'GrayText',
-                p: .5,
-                textAlign: 'center'
-            }} variant={'caption'} textAlign={'center'}>Desenvolvido por Cristian C.
-                Mendes</Typography>
-        </Box>
+        <Grid sx={{position: 'fixed', bottom: 0, width: '100%'}} size={12} container alignItems={'center'}
+              justifyContent={'center'}>
+            <Grid>
+                <Typography sx={{
+                    color: 'GrayText',
+                    p: .5,
+                    textAlign: 'center'
+                }} variant={'caption'} textAlign={'center'}>Desenvolvido por Cristian C.
+                    Mendes</Typography>
+            </Grid>
+            <Grid>
+                <IconButton component={'a'} href={import.meta.env['VITE_MY_INSTAGRAM_URL']} target={'_blank'}
+                            sx={{color: 'GrayText'}}>
+                    <Instagram/>
+                </IconButton>
+                <IconButton component={'a'} href={import.meta.env['VITE_MY_GITHUB_URL']} target={'_blank'}
+                            sx={{color: 'GrayText'}}>
+                    <GitHub/>
+                </IconButton>
+                <IconButton component={'a'} href={import.meta.env['VITE_MY_LINKEDIN_URL']}
+                            target={'_blank'}
+                            sx={{color: 'GrayText'}}>
+                    <LinkedIn/>
+                </IconButton>
+            </Grid>
+        </Grid>
         <DrawerMenu open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
     </Box>)
 }

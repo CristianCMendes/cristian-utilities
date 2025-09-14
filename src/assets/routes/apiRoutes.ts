@@ -5,7 +5,6 @@ import type {mailType} from "@assets/models/shared/mailType.ts";
 import type {ISecretFriend} from "@assets/models/entities/secretFriend/ISecretFriend.ts";
 import type {IListSecretFriendDto} from "@assets/models/requests/IListSecretFriendDto.ts";
 
-const baseapi_v1 = `/api/v1`
 type method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
 /**
@@ -29,17 +28,16 @@ export interface IApiRoute<T = any> {
 
 export const API_ROUTES = {
     'account': {
-        url: baseapi_v1 + '/account',
         'login': function (data: { email: mailType, password: string }) {
             return {
-                url: this.url + '/login',
+                url: `api/v1/Account/Login`,
                 method: 'POST',
                 body: data,
             } as IApiRoute<IUserAuth>
         },
         'register': function (data: { name: string, email: string, password: string }) {
             return {
-                url: this.url + '/register',
+                url: `api/v1/Account/Register`,
                 method: 'POST',
                 body: data,
                 allowAnonymous: true,
@@ -47,39 +45,50 @@ export const API_ROUTES = {
         },
         'confirmMailWithId': function (data: { id: number, token: string }) {
             return {
-                url: this.url + '/confirmmail',
+                url: `api/v1/Account/${data.id}/ConfirmMail`,
                 method: 'POST',
                 body: data,
             } as IApiRoute<IUserAuth>
         },
         'confirmMail': function (data: { email: mailType, token: number }) {
             return {
-                url: this.url + '/confirmmail',
+                url: `api/v1/Account/ConfirmMail`,
                 method: 'POST',
                 body: data,
             } as IApiRoute<IUserAuth>
         }
     },
     'users': {
-        url: baseapi_v1 + '/users',
         'list': function (data: { pagination: IPagination }) {
             return {
-                url: this.url + '/list',
+                url: `api/v1/Users/List`,
                 pagination: data.pagination,
                 method: 'GET'
             } as IApiRoute<IUser[]>
         },
     },
     'secretFriend': {
-        url: baseapi_v1 + '/secretfriend',
-        'list': function (data: {filters: IListSecretFriendDto, pagination: IPagination}) {
+        'list': function (data: { filters: IListSecretFriendDto, pagination: IPagination }) {
             const {filters, pagination} = data
             return {
-                url: this.url + '/list',
+                url: `api/v1/SecretFriend/List`,
                 method: 'GET',
                 query: filters,
                 pagination,
             } as IApiRoute<ISecretFriend[]>
+        },
+        'create': function (data: {
+            name: string,
+            date: Date,
+            description?: string,
+            minimumPrice?: number,
+            maximumPrice?: number
+        }) {
+            return {
+                url: `api/v1/SecretFriend/Create`,
+                method: 'POST',
+                body: data,
+            } as IApiRoute<ISecretFriend>
         }
     }
 } as const
