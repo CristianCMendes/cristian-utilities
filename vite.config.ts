@@ -30,6 +30,7 @@ export default defineConfig(({mode}) => {
                 }
             })
         ],
+        appType: 'mpa',
         build: {
             target: 'es2020',
             minify: 'esbuild',
