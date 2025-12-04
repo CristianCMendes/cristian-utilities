@@ -1,4 +1,5 @@
-import {Autocomplete, FormControlLabel, Grid, MenuItem, Switch, TextField} from "@mui/material";
+import {ContentCopy, ContentPaste} from "@mui/icons-material";
+import {Autocomplete, FormControlLabel, Grid, IconButton, MenuItem, Switch, TextField, Typography} from "@mui/material";
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
 import {useCallback, useEffect, useMemo, useState} from "react";
 
@@ -160,7 +161,7 @@ export function JsonShaper() {
 	// Checa se o input tá valido, trazendo o json dele caso seja
 	const inputValid = useMemo(() => {
 		try {
-			const normalized = input.replace(/([\{,]\s*)([A-Za-z_][A-Za-z0-9_]*)\s*:/g, '$1"$2":')
+			const normalized = input.replace(/([{,]\s*)([A-Za-z_][A-Za-z0-9_]*)\s*:/g, '$1"$2":')
 			return JSON.parse(normalized)
 		} catch {
 			return undefined
@@ -356,6 +357,18 @@ export function JsonShaper() {
 			</Grid>
 			<Grid size={6} container>
 				<Grid size={12}>
+					<Grid size={12} container alignItems={'center'} justifyContent={'space-between'}>
+						<IconButton size={'small'} onClick={() => navigator.clipboard.readText().then(x => {
+							setInput(x)
+						})}>
+							<Typography>Colar</Typography>
+							<ContentPaste/>
+						</IconButton>
+						<IconButton size={'small'} onClick={() => navigator.clipboard.writeText(input)}>
+							<Typography>Copiar</Typography>
+							<ContentCopy/>
+						</IconButton>
+					</Grid>
 					<TextField variant={'outlined'}
 					           multiline={true}
 					           value={input}
@@ -366,9 +379,17 @@ export function JsonShaper() {
 
 			<Grid size={6} container>
 				<Grid size={12}>
-					<TextField variant={'outlined'}
-					           multiline={true}
-					           value={output}/>
+					<Grid size={12} container alignItems={'center'} justifyContent={'flex-end'}>
+						<IconButton size={'small'} onClick={() => navigator.clipboard.writeText(output)}>
+							<Typography>Copiar</Typography>
+							<ContentCopy/>
+						</IconButton>
+					</Grid>
+					<Grid size={12}>
+						<TextField variant={'outlined'}
+						           multiline={true}
+						           value={output}/>
+					</Grid>
 				</Grid>
 			</Grid>
 		</Grid>
