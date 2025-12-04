@@ -1,6 +1,6 @@
 import {Autocomplete, FormControlLabel, Grid, MenuItem, Switch, TextField} from "@mui/material";
 import {DefaultContainer} from "@shared/DefaultContainer.tsx";
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 
 const defaultTestJson = {
 	data: {
@@ -36,23 +36,29 @@ interface IOutputOptions {
 	stringOnly: boolean
 }
 
+const optionDefaults = {
+	keySeparator: ":",
+	valueSeparator: ",",
+	method: "pretty",
+	quoted: {
+		keys: true,
+		strings: "double"
+	},
+	removeEmptyArrays: false,
+	removeEmptyObjects: false,
+	removeEmptyStrings: false,
+	spaces: 2,
+	removeNulls: false,
+	stringOnly: false
+} as IOutputOptions
+
 export function JsonShaper() {
 	const [input, setInput] = useState<string>(JSON.stringify(defaultTestJson, null, 2))
-	const [options, setOptions] = useState<IOutputOptions>({
-		keySeparator: ":",
-		valueSeparator: ",",
-		method: "pretty",
-		quoted: {
-			keys: true,
-			strings: "double"
-		},
-		removeEmptyArrays: false,
-		removeEmptyObjects: false,
-		removeEmptyStrings: false,
-		spaces: 2,
-		removeNulls: false,
-		stringOnly: false
-	})
+	const [options, setOptions] = useState<IOutputOptions>(JSON.parse(localStorage.getItem('json-shaper-options') as string) as IOutputOptions ?? optionDefaults)
+
+	useEffect(() => {
+		localStorage.setItem('json-shaper-options', JSON.stringify(options))
+	}, [options]);
 
 	// Trata de remover recursivamente todas as strings que são ""
 	const removeEmptyStrings = useCallback((obj: any): any => {
