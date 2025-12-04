@@ -5,14 +5,16 @@ import {ROUTES} from "@utils/routeNames.ts";
 import {SorteioAleatorioPage} from "@components/random/pages/SorteioAleatorioPage.tsx";
 import {PwdGenPage} from "@components/random/pages/PwdGenPage.tsx";
 import {DiceRollPage} from "@components/random/pages/DiceRollPage.tsx";
+import {JsonShaper} from "@components/utilities/pages/JsonShaper.tsx";
 
 export function AppRoutes() {
-    return (<Routes>
-        <Route path="*" element={<AppLayout/>} children={[
-            <Route path={''} element={<HomePage/>}/>,
-            <Route path={ROUTES.sorteioAleatorio} element={<SorteioAleatorioPage/>}/>,
-            <Route path={ROUTES.geradorSenhas} element={<PwdGenPage/>}/>,
-            <Route path={ROUTES.rolagemDados} element={<DiceRollPage/>}/>
-        ]}/>
-    </Routes>)
+	return (<Routes>
+		<Route path="*" element={<AppLayout/>} children={[
+			<Route path={''} element={<HomePage/>}/>,
+			<Route path={ROUTES.sorteioAleatorio} element={<SorteioAleatorioPage/>}/>,
+			<Route path={ROUTES.geradorSenhas} element={<PwdGenPage/>}/>,
+			<Route path={ROUTES.rolagemDados} element={<DiceRollPage/>}/>,
+			<Route path={ROUTES.modeladorJson} element={<JsonShaper/>}/>
+		]}/>
+	</Routes>)
 }
