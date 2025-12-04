@@ -5,15 +5,17 @@ export const geradorQrCode = 'gerador-qr-code'
 export const rolagemDados = 'rolagem-dados'
 export const amigoSecreto = 'amigo-secreto'
 export const amigoSecretoMeus = amigoSecreto + 'meus'
+export const modeladorJson = 'modelador-json'
 
 export const ROUTES = {
-    index,
-    sorteioAleatorio,
-    geradorSenhas,
-    geradorQrCode,
-    rolagemDados,
-    amigoSecreto,
-    amigoSecretoMeus,
+	index,
+	sorteioAleatorio,
+	geradorSenhas,
+	geradorQrCode,
+	rolagemDados,
+	amigoSecreto,
+	amigoSecretoMeus,
+	modeladorJson
 }
 
 export type ROUTES_KEYS = keyof typeof ROUTES
